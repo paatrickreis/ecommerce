@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 
 from django.contrib import admin
 from django.urls import path
+from produtoapp.views import (ProdutoListView, ProdutoDetailView, ProdutoFeaturedListView, ProdutoFeaturedDetailView, ProdutoDetailSlugView)
 
 from .views import home_page, about_page, contact_page, login_page, register_page
 
@@ -29,6 +30,11 @@ urlpatterns = [
     path('sobre/', about_page),
     path('login/',login_page),
     path('registro/', register_page),
+    path('produtos/', ProdutoListView.as_view()),
+    path('produtos/<int:pk>', ProdutoDetailView.as_view()),
+    path('produtos/<slug:slug>/', ProdutoDetailSlugView.as_view()),
+    path('destaque_produtos/',ProdutoFeaturedListView.as_view()),
+    path('destaque_produtos/<int:pk>/', ProdutoFeaturedDetailView.as_view()),
 
 ]
 
