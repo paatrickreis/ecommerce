@@ -37,11 +37,14 @@ class Produto(models.Model): #product_category
     desc_produto = models.TextField()
     preço_produto = models.DecimalField(decimal_places=2, max_digits=20, default=100.00)
     imagem_produto = models.ImageField(upload_to = 'products/', null=True, blank=True)
-    destaque =  models.BooleanField(default = False)
+    destaque = models.BooleanField(default = False)
     ativo = models.BooleanField(default = True)
     slug = models.SlugField(blank= True, unique= True)
 
     objects = ProdutoManager()
+
+    def get_absolute_url(self):
+        return "/produtos/{slug}/".format(slug=self.slug)
 
     # python 3
     def __str__(self):

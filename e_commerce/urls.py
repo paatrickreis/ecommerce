@@ -1,41 +1,24 @@
-"""e_commerce URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
 from django.conf import settings
 from django.conf.urls.static import static
 
 from django.contrib import admin
-from django.urls import path
-from produtoapp.views import (ProdutoListView, ProdutoDetailView, ProdutoFeaturedListView, ProdutoFeaturedDetailView, ProdutoDetailSlugView)
+from django.urls import path, include
 
-from .views import home_page, about_page, contact_page, login_page, register_page
+from .views import (home_page, 
+                    about_page, 
+                    contact_page, 
+                    login_page, 
+                    register_page
+)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', home_page),
-    path('contato/', contact_page),
     path('sobre/', about_page),
-    path('login/',login_page),
+    path('contato/', contact_page),
+    path('login/', login_page),
     path('registro/', register_page),
-    path('produtos/', ProdutoListView.as_view()),
-    path('produtos/<int:pk>', ProdutoDetailView.as_view()),
-    path('produtos/<slug:slug>/', ProdutoDetailSlugView.as_view()),
-    path('destaque_produtos/',ProdutoFeaturedListView.as_view()),
-    path('destaque_produtos/<int:pk>/', ProdutoFeaturedDetailView.as_view()),
-
+    path('produtos/', include('produtoapp.urls')),
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:
